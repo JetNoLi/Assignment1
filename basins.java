@@ -32,15 +32,10 @@ public class basins{
         
         //read in to grid and linearGrid
         for (int i = 0; i< rowLength; i++){
-            
-            String[] line = gridFile.nextLine().split(" ");
-
-            for (int j = 0; j < colLength; j++){
-                //this.grid[i][j] = Float.parseFloat(line[j]); 
-                this.linearGrid[this.getLinearizedIndex(i,j)] = Float.parseFloat(line[j]);
+            for (int j = 0; j < colLength; j++){     
+                this.linearGrid[this.getLinearizedIndex(i,j)] = Float.parseFloat(gridFile.next());
             }
         }
-
     }
 
     public void getBasins(){
@@ -48,23 +43,24 @@ public class basins{
         for (int i = 0 ; i < linearGrid.length; i++){
 
             //beginning or end of a row( i.e col 0 and last col) 
-            if (i%rowLength == 0 || i%(rowLength-1) == 0){
+            if (i%rowLength == 0 || i%(rowLength-1 + i/rowLength * colLength) == 0){
                 continue;
             }
 
             //beginning or end of a column (i.e. row 0 and last row)
             
-            if (i < rowLength || i > (rowLength-1)*(colLength)){
+            if (i < rowLength || i >= (rowLength-1)*(colLength)){
                 continue;
             }
 
+            //System.out.println(i);
             //check for basins left and right
             if (linearGrid[i+1] - linearGrid[i] >= 0.01 && linearGrid[i-1] - linearGrid[i] >= 0.01){
-                //check above
+                //check below
 
                 if (linearGrid[i + rowLength] - linearGrid[i] >= 0.01 && linearGrid[i + rowLength + 1] - linearGrid[i] >= 0.01 && linearGrid[i + rowLength - 1] - linearGrid[i] >= 0.01){
-                    //check below
-
+                    //check above
+                   
                     if (linearGrid[i - rowLength] - linearGrid[i] >= 0.01 && linearGrid[i - rowLength + 1] - linearGrid[i] >= 0.01 && linearGrid[i - rowLength - 1] - linearGrid[i] >= 0.01){
                         //is a basin
                         int[] ind = getBooleanIndices(i);
@@ -85,7 +81,7 @@ public class basins{
             for (int j = 0; j < booleanGrid[0].length; j++){
                 
                 if (booleanGrid[i][j] == true){
-                    System.out.println((i-1) + " " + (j-1));
+                    System.out.println((i+1) + " " + (j+1));
                 }
 
             }   
@@ -97,13 +93,13 @@ public class basins{
     }
 
     public int[] getBooleanIndices(int index){
-        float r = index/grid.length;
+        float r = ((float)index)/((float)rowLength);
         float c = r%1;
 
         float row = r - c;
-        float col = c * row;
+        float col = c * rowLength;
 
-        int[] indices = {(int) row + 1,(int) col + 1};
+        int[] indices = {(int) row - 1,(int) col - 1};
         return indices;
     }
 

@@ -1,14 +1,18 @@
 public class test {
     
     public static void main(String[] args){
-        double check = 6.5;
-        double frac = check %1;
-        
-        
+        int index = 9;
+        int rowLength = 4;
+        float r = index/rowLength;
+        float c = r%1;
+
+        float row = r - c;
+        float col = c * rowLength;
 
         
 
-        System.out.println("Output = "+ check);
-        System.out.println("row = "+ frac);
+        System.out.println("r = "+ r);
+        System.out.println("c = "+ c);
+        System.out.println("col " + col);
     }
 }
