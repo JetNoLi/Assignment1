@@ -1,8 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-
-public class basins{
+public class paraBasins extends RecursiveTask<String>{
     /** Class to find basins in an N x M grid for Terrain Classification */
 
     //instance variables
@@ -14,7 +13,7 @@ public class basins{
 
 
     //constructor
-    public basins(){
+    public paraBasins(){
         /**method to read in gridFile data to instance varaibles */
         this.basinCount = 0;
     }
@@ -102,7 +101,7 @@ public class basins{
 
 
     public static void main(String[] args){
-        basins basin = new basins();
+        paraBasins basin = new paraBasins();
         
         
         try{
@@ -116,6 +115,5 @@ public class basins{
         basin.getBasins();
         basin.printBasins();
     }
-
-
+    
 }
