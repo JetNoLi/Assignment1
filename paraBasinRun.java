@@ -16,14 +16,26 @@ public class paraBasinRun {
 
 
     public static void main(final String[] args) {
+        if (args.length > 1){
+            System.out.println("For Sequential cutoff: " + args[1]);
+        }
+
         String gridOutput = "";
-        double time = 0;
+        double[] times = new double[5];
+        String dummy = "";
 
         try {
             final float[] grid = paraFunctions.getLinearGrid(new Scanner(new File(args[0])));
-            test.tick();
-            gridOutput = runParallel(grid, (int)grid[grid.length - 2], (int) grid[grid.length - 1]);
-            time = test.tock();
+            
+            for (int i = 0 ; i < 10; i++){
+                dummy = runParallel(grid, (int)grid[grid.length - 2], (int) grid[grid.length - 1]);
+            }
+
+            for (int i = 0; i<10; i++){
+                test.tick();
+                gridOutput = runParallel(grid, (int)grid[grid.length - 2], (int) grid[grid.length - 1]);
+                System.out.println("Time taken in ms: " + test.tock());
+            }
         }
 
         catch (final FileNotFoundException e) {
@@ -31,8 +43,6 @@ public class paraBasinRun {
         }  
 
         gridOutput = paraFunctions.getOutputFormat(gridOutput);
-        //System.out.println(gridOutput);
-        System.out.println("Time taken in ms: " + time);
 
         try{
             FileWriter wFile = new FileWriter(args[0].replace("in","testOut"));

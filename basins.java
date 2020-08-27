@@ -102,12 +102,21 @@ public class basins{
         catch(FileNotFoundException e){
             System.out.println("Error File not Found");
         }
-        test.tick();
-        String gridOutput = basin.getBasins();
-        double time = test.tock();
-
-        System.out.println("Time taken in ms: " + time);
         
+        String gridOutput = "";
+        String dummy = "";
+
+        for (int i = 0; i < 10; i++){
+            dummy = basin.getBasins();
+        }
+
+        for (int i = 0; i< 10; i++){
+
+            test.tick();
+            gridOutput = basin.getBasins();
+            System.out.println("Time taken in ms: " + test.tock());
+        }
+
         try{
             FileWriter wFile = new FileWriter(args[0].replace("in","testOut"));
             wFile.write(gridOutput);
@@ -117,6 +126,6 @@ public class basins{
         catch(IOException e){
             System.out.println("Could not write to file");
         }
+        
     }
-
 }

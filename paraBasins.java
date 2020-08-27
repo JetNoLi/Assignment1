@@ -12,7 +12,7 @@ import java.util.concurrent.ForkJoinPool;
     private int colLength;
     private int lo;
     private int hi;
-    static final int Threshold = 512;
+    static final int Threshold = 66; //replacable
 
 
     //constructor
@@ -24,6 +24,7 @@ import java.util.concurrent.ForkJoinPool;
         this.lo = lo;
         
     }
+
 
     public boolean basinCheck(int i){
         //beginning or end of a row( i.e col 0 and last col) 
