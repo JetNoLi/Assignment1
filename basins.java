@@ -6,11 +6,10 @@ public class basins{
     /** Class to find basins in an N x M grid for Terrain Classification */
 
     //instance variables
-    //private String basinGrid; 
     private float[] linearGrid;
-    //private int basinCount;
     private int rowLength;
     private int colLength;
+    //static double startTime;
 
     //constructor
     public basins(){
@@ -96,7 +95,6 @@ public class basins{
     public static void main(String[] args){
         basins basin = new basins();
         
-        
         try{
             basin.readInGrid(new Scanner(new File(args[0])));
         }
@@ -104,8 +102,21 @@ public class basins{
         catch(FileNotFoundException e){
             System.out.println("Error File not Found");
         }
+        test.tick();
+        String gridOutput = basin.getBasins();
+        double time = test.tock();
 
-        System.out.println(basin.getBasins());
+        System.out.println("Time taken in ms: " + time);
+        
+        try{
+            FileWriter wFile = new FileWriter(args[0].replace("in","testOut"));
+            wFile.write(gridOutput);
+            wFile.close();
+        }
+
+        catch(IOException e){
+            System.out.println("Could not write to file");
+        }
     }
 
 }

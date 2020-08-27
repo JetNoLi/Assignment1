@@ -1,18 +1,54 @@
-public class test {
-    
-    public static void main(String[] args){
-        int index = 9;
-        int rowLength = 4;
-        float r = index/rowLength;
-        float c = r%1;
 
-        float row = r - c;
-        float col = c * rowLength;
+import java.io.*;
+import java.util.Scanner;
+//import org.apache.commons.io.FileUtils;
+public class test{
+    static double startTime = 0;
+
+    public static void tick(){
+        startTime = System.currentTimeMillis();
+    } 
+
+    public static double tock(){
+        return (System.currentTimeMillis() - startTime)/1000.0;
+    }
+    
+
+    public static void main(String[] args){
+        Scanner src;
+        Scanner test;
 
         
+        try{
+            src = new Scanner(new File(args[0]));
+            test = new Scanner(new File(args[1]));
 
-        System.out.println("r = "+ r);
-        System.out.println("c = "+ c);
-        System.out.println("col " + col);
+            if (contentEquals(src,test)){
+                System.out.println("Output is correct");
+            }
+            else{
+                System.out.println("Output is incorrect");
+            }
+        }
+
+        catch(IOException e){
+            System.out.println("Error reading in Files");
+        }
     }
+
+    public static boolean contentEquals(Scanner src, Scanner test){
+        
+        while (src.hasNext()){
+            if (src.next().equals(test.next())){
+                continue;
+            }
+
+            else{
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

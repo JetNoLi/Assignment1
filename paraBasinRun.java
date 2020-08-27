@@ -14,23 +14,35 @@ public class paraBasinRun {
 
     }
 
+
     public static void main(final String[] args) {
         String gridOutput = "";
+        double time = 0;
 
         try {
             final float[] grid = paraFunctions.getLinearGrid(new Scanner(new File(args[0])));
+            test.tick();
             gridOutput = runParallel(grid, (int)grid[grid.length - 2], (int) grid[grid.length - 1]);
-
+            time = test.tock();
         }
 
         catch (final FileNotFoundException e) {
             System.out.println("Error File not Found");
         }  
 
-        //System.out.println(paraBasinsFunctions.init(grid,rowLength,colLength));
+        gridOutput = paraFunctions.getOutputFormat(gridOutput);
+        //System.out.println(gridOutput);
+        System.out.println("Time taken in ms: " + time);
 
-        System.out.println(gridOutput.lines().count());
-        System.out.println(gridOutput);
+        try{
+            FileWriter wFile = new FileWriter(args[0].replace("in","testOut"));
+            wFile.write(gridOutput);
+            wFile.close();
+        }
+
+        catch(IOException e){
+            System.out.println("Could not write to file");
+        }
     }
 }
     
